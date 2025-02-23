@@ -83,3 +83,18 @@ def read_input(filename):
         targets[color] = count
     
     return N, landscape, tile_counts, targets
+
+
+def get_neighbors(var, variables):
+    i, j = var
+    k = int(len(variables) ** 0.5)
+    neighbors = []
+    if i > 0:
+        neighbors.append((i-1, j))  # up
+    if j > 0:
+        neighbors.append((i, j-1))  # left
+    if i < k - 1:
+        neighbors.append((i+1, j))  # down
+    if j < k - 1:
+        neighbors.append((i, j+1))  # right
+    return [n for n in neighbors if n in variables]
