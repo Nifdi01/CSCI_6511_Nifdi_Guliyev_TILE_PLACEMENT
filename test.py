@@ -16,8 +16,6 @@ class TestCSPSolver(unittest.TestCase):
     
     def test_input_file_parsing_and_solution(self):
         input_files = [f for f in os.listdir(self.input_dir) if f.endswith(".txt")]
-        if not input_files:
-            self.skipTest(f"No .txt files found in '{self.input_dir}'")
         
         for filename in input_files:
             with self.subTest(filename=filename):
