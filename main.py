@@ -1,5 +1,5 @@
 import sys
-from csp_solver import solve_csp
+from csp_solver import LandscapeCSPSolver
 from utils import read_input
 import time
 
@@ -8,6 +8,7 @@ if __name__ == "__main__":
         print("Usage: python script.py <input_file>")
         sys.exit(1)
     N, landscape, tile_counts, targets = read_input(sys.argv[1])
+    solver = LandscapeCSPSolver(N, landscape, tile_counts, targets)
     s = time.time()
-    solve_csp(N, landscape, tile_counts, targets)
+    solver.solve()
     print("Time taken:", time.time() - s)
