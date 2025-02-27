@@ -1,12 +1,20 @@
 from collections import deque
 from utils import get_neighbors
 
-def ac3(var, val, domains, variables, assignment):
-    def revise(x, y):
+
+class AC3ConstraintPropagator:
+    def __init__(self, variables):
+        self.variables = variables
+    
+    def revise(self, x, y, domains, assignment):
+        """
+        Revise the domain of x with respect to y.
+        Returns True if the domain of x was reduced.
+        """
         revised = False
         to_remove = set()
-        x_val = assignment.get(x) if x in assignment else None
-        y_val = assignment.get(y) if y in assignment else None
+        x_val = assignment.get(x)
+        y_val = assignment.get(y)
         
         # If x is assigned, check consistency with y's domain
         if x_val is not None:
@@ -26,28 +34,37 @@ def ac3(var, val, domains, variables, assignment):
         
         if x in assignment:
             return False  # No revision needed for assigned variables
+            
         domains[x] -= to_remove
         if to_remove:
             revised = True
+        
         return revised
-
-    # If called with a new assignment, only propagate from affected arcs
-    if var is not None:
-        queue = deque([(n, var) for n in get_neighbors(var, variables) if n not in assignment])
-    else:
-        # Initial call: all arcs
-        queue = deque()
-        for x in variables:
-            for y in get_neighbors(x, variables):
-                if y > x:  # Avoid duplicates (e.g., (0,1) and (1,0))
-                    queue.append((x, y))
-
-    while queue:
-        (x, y) = queue.popleft()
-        if revise(x, y):
-            if not domains[x]:
-                return False
-            for z in get_neighbors(x, variables):
-                if z != y and z not in assignment:
-                    queue.append((z, x))
-    return True
+    
+    def propagate(self, var, val, domains, assignment):
+        """
+        Enforce arc consistency on the constraint network.
+        Returns False if inconsistency is detected, True otherwise.
+        """
+        # If called with a new assignment, only propagate from affected arcs
+        if var is not None:
+            queue = deque([(n, var) for n in get_neighbors(var, self.variables) if n not in assignment])
+        else:
+            # Initial call: all arcs
+            queue = deque()
+            for x in self.variables:
+                for y in get_neighbors(x, self.variables):
+                    if y > x:  # Avoid duplicates (e.g., (0,1) and (1,0))
+                        queue.append((x, y))
+    
+        while queue:
+            (x, y) = queue.popleft()
+            if self.revise(x, y, domains, assignment):
+                if not domains[x]:
+                    return False  # Domain wipeout, inconsistency detected
+                # Add neighbors of x back to the queue
+                for z in get_neighbors(x, self.variables):
+                    if z != y and z not in assignment:
+                        queue.append((z, x))
+        
+        return True  # No inconsistency detected
