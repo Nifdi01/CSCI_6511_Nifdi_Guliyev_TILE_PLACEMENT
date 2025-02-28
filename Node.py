@@ -195,20 +195,3 @@ class Node:
             if tile1.layout != tile2.layout:
                 return False
         return True
-
-    def __str__(self):
-        """
-        Returns a string representation of the Node.
-        Displays each tile's information, current counts, goals, and distance metrics.
-        """
-        result = "Variable:\n"
-        for i, tile in enumerate(self.tiles):
-            result += f"\t | \t Tile: {i}\t | \t{tile}\n"
-        result += "Tile Layout Count: " + str(self.layout_number_calc()) + "\n"
-        result += "Tile Layout Goal: " + f"[OUTER {self.layoutTarget[0]}, EL {self.layoutTarget[1]}, FULL {self.layoutTarget[2]}]\n"
-        result += "Target Number Count: " + str(self.target_number_calc()) + "\n"
-        result += ("Target Number Goal: " +
-                   f"[1: {self.colorTarget[0]}, 2: {self.colorTarget[1]}, 3: {self.colorTarget[2]}, 4: {self.colorTarget[3]}]\n")
-        result += "Target Difference: " + str(self.distColor) + "\n"
-        result += "Layout Difference: " + str(self.distLayout) + "\n"
-        return result
