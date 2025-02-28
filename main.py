@@ -12,7 +12,7 @@ def main():
     # Initialize FileReader and read the input file
     fr = FileReader()
     try:
-        input_file = f"inputs/{sys.argv[1]}"
+        input_file = sys.argv[1]
         fr.read_file(input_file)
     except FileNotFoundError:
         print(f"File not found: {input_file}", file=sys.stderr)
