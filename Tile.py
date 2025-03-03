@@ -12,8 +12,3 @@ class Tile:
         self.layout = lay
         self.domain = ['O', 'E', 'F']
         self.layoutName = name
-
-    def __str__(self):
-        # Build a string similar to the Java toString() method.
-        result = "Value: " + str(self.value) + " Layout: " + str(self.layout) + " " + self.layoutName
-        return result

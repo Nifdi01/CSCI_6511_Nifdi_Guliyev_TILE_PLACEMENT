@@ -28,7 +28,8 @@ def main():
     total_tiles = fr.get_total_tiles()  # Total number of tiles.
 
     # Run the CSP algorithm
-    csp_alg(tiles, targets, tile_count, total_tiles)
+    a = csp_alg(tiles, targets, tile_count, total_tiles)
+    print(a)
 
 if __name__ == '__main__':
     main()

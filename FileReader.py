@@ -39,7 +39,7 @@ class FileReader:
         
         # Extract individual tiles from the landscape;
         # each tile is a 4x4 block and we stop when we have the expected total number of tiles.
-        self.tiles = self.extract_tiles(self.landscape, dimension, tile_size=4, total_tiles=self.total_tiles)
+        self.tiles = self.extract_tiles(self.landscape, tile_size=4, total_tiles=self.total_tiles)
         
         # Parse targets from the next 4 lines after the tile info line
         self.targets = self.set_targets(self.text[dimension + 1: dimension + 5])
@@ -91,7 +91,7 @@ class FileReader:
             landscape.append(row)
         return landscape
 
-    def extract_tiles(self, landscape, dimension, tile_size=4, total_tiles=0):
+    def extract_tiles(self, landscape, tile_size=4, total_tiles=0):
         """
         Divides the landscape into non-overlapping 4x4 blocks.
         Assumes the landscape is a square of size 'dimension'.

@@ -35,10 +35,3 @@ class Arc:
         if not isinstance(other, Arc):
             return False
         return self.n1 == other.n1 and self.n2 == other.n2
-
-    def __str__(self):
-        """
-        Returns a string representation of the Arc.
-        Assumes that each Node has a method target_number_calc() that returns a list.
-        """
-        return f"\nArc Left: {self.n1.target_number_calc()} Arc Right: {self.n2.target_number_calc()}"
